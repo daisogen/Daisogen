@@ -1,0 +1,10 @@
+[build]
+target = "/opt/x86_64-daisogen.json" # Remember to ln -sf it
+# Something in the lines of
+# sudo ln -sf /home/jlxip/git/Daisogen/.cargo/x86_64-daisogen.json /opt/
+
+[unstable]
+# Use built-in memory functions
+build-std-features = ["compiler-builtins-mem"]
+# Compile core and compiler_builtins for target
+build-std = ["core", "compiler_builtins"]
