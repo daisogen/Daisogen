@@ -1,2 +1,6 @@
 img/
 Daisogen.iso
+projects.txt
+projects/
+.expansion.mk
+limine.cfg

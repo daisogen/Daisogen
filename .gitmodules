@@ -1,6 +1,3 @@
-[submodule "kernel"]
-	path = projects/kernel
-	url = git@github.com:daisogen/kernel
 [submodule "limine"]
 	path = limine
 	url = https://github.com/limine-bootloader/limine
