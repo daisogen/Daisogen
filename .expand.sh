@@ -9,8 +9,6 @@ fi
 
 # The two basics: kernel and std
 cat > .expansion.mk <<EOF
-repo_std := https://github.com/daisogen/std
-
 PROJECTS := kernel
 repo_kernel := https://github.com/daisogen/kernel
 
@@ -31,16 +29,28 @@ EOF
 
 # Here we go
 CTR=0
-while read p; do
-    name="$(echo "$p" | cut -d" " -f1)"
-    repo="$(echo "$p" | cut -d" " -f2)"
+while IFS= read -r line; do
+    name="$(echo "$line" | cut -d" " -f1)"
+    repo="$(echo "$line" | cut -d" " -f2)"
+
+    if [ -z "$name" ]; then
+        # Empty line, ignore
+        continue
+    fi
+
+    if [ "${name:0:1}" = "#" ]; then
+        # Commented, ignore
+        continue
+    fi
 
     echo "PROJECTS += $name" >> .expansion.mk
     echo "repo_$name := $repo" >> .expansion.mk
+    # All Daisogen programs need to be PIC, so let's add it here directly
+    echo "flags_$name := --config 'build.rustflags = [\"-Crelocation-model=pic\", \"-Clink-arg=-pie\"]'" >> .expansion.mk
 
     echo "MODULE_PATH=boot:///boot/$name" >> limine.cfg
     echo "MODULE_STRING=$CTR $name" >> limine.cfg
     echo >> limine.cfg
 
-    (( CTR++ ))
+    (( CTR=CTR+1 ))
 done < projects.txt
