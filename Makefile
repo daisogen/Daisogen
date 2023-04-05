@@ -36,7 +36,7 @@ $(IMG): limine/limine-deploy
 	$(MAKE) _projects --no-print-directory
 
 	echo -e $(call pretty,$(IMG))
-	cp -v limine.cfg $(LIMINE_FILES) $(BOOT_DIR)/
+	cp -v $(LIMINE_FILES) $(BOOT_DIR)/
 	xorriso -as mkisofs -b boot/limine-cd.bin -no-emul-boot \
 		-boot-load-size 4 -boot-info-table \
 		--protective-msdos-label -o $@ $(IMGPATH) &> /dev/null
@@ -75,4 +75,4 @@ mrproper:
 	echo '👨🏻‍🦲🧹'
 	rm -rfv ./projects
 	rm -rfv $(IMG) $(IMGPATH)
-	rm -f .expansion.mk limine.cfg
+	rm -f .expansion.mk
