@@ -20,11 +20,17 @@ else
 CARGO_TARGET := debug
 endif
 
+QEMU := qemu-system-x86_64
+CPU := IvyBridge
+RAM := 128M
+NET := -netdev user,id=daisogen0 -device rtl8139,netdev=daisogen0
+QEMU_FLAGS := -cdrom $(IMG) -cpu $(CPU) -machine pc -m $(RAM) $(NET)
+
 .PHONY: all run release debug $(IMG) clean
 
 all: $(IMG)
 run: all
-	qemu-system-x86_64 -cdrom $(IMG) -cpu IvyBridge -machine pc -m 128M
+	$(QEMU) $(QEMU_FLAGS)
 release:
 	RELEASE=1 $(MAKE) all
 debug: all

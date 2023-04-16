@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# This file takes projects.txt and builds .expansion.mk, which is used in
+# the Makefile, and img/boot/limine.cfg, which lets Limine (the bootloader)
+# know which modules to load.
+
 rm -f .expansion.mk limine.cfg || :
 
 if [ ! -f projects.txt ]; then
@@ -7,7 +11,7 @@ if [ ! -f projects.txt ]; then
     exit
 fi
 
-# The two basics: kernel and std
+# Add the kernel
 cat > .expansion.mk <<EOF
 PROJECTS := kernel
 repo_kernel := https://github.com/daisogen/kernel
