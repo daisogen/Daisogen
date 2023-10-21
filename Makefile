@@ -24,7 +24,7 @@ QEMU := qemu-system-x86_64
 CPU := IvyBridge
 RAM := 128M
 NET := -netdev user,id=daisogen0 -device rtl8139,netdev=daisogen0
-QEMU_FLAGS := -cdrom $(IMG) -cpu $(CPU) -machine pc -m $(RAM) $(NET)
+QEMU_FLAGS := -cdrom $(IMG) -cpu $(CPU) -machine pc -m $(RAM) $(NET) -enable-kvm
 
 .PHONY: all run release debug $(IMG) clean
 
